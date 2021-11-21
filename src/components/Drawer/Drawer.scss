@@ -1,0 +1,112 @@
+.overlay{
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.3);
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    
+    .drawer{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: absolute;
+      height: 100% ;
+      width: 310px;
+      min-width: 200px;
+      background-color: white;
+      right: 0;
+      top: 0;
+      padding: 15px;
+      h1{
+        margin: 0;
+        font-size: 28px;
+
+      }
+      .items{
+        overflow: auto;
+        .h1AndX{
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          img{
+            height: 20px;
+            margin-right: 20px;
+          }
+        }
+      }
+      .drawerBottom{
+        margin-bottom: 35px;
+        div{
+          display: flex;
+          justify-content: space-between;
+        }
+        .dash{
+          border-bottom: 1px dashed rgba(94, 93, 93, 0.356);
+          width: 200px;
+          margin-bottom: 3px;
+        }
+        .toOrder{
+          margin-top: 25px;
+          font-size: 18px;
+          background: rgba(128, 255, 0, 0.507);
+          padding: 15px 100px 15px 100px ;
+          display: flex;
+          border: 1px solid rgba(8, 90, 8, 0.4);
+          border-radius: 15px;
+          cursor: pointer;
+          align-items: center;
+          
+          &:hover{
+            background: rgba(128, 255, 0, 0.6);
+            img{
+              transform: translateX(5px);
+            }
+          }
+          &:active{
+            background: rgba(128, 255, 0, 0.8);
+          }
+          img{
+            margin-left: 10px;
+            height: 25px;
+            transition: transform 0.2s ease-in-out;
+            
+            
+          }
+        }
+      }
+      .imgAndName{
+        display: flex;
+        img{
+          margin-right: 15px;
+        }
+      }
+      .remove{
+        height: 25px;
+        opacity: 0.3;
+        &:hover{
+          opacity: 0.8;
+          cursor: pointer;
+        }
+      }
+      
+      hr{
+        margin-bottom: 30px;
+        border-top: 1px solid #cfcfcf;
+      }
+      .cartItem{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        line-height: 13px;
+        border: 1px solid #cfcfcf;
+        border-radius: 20px;
+        padding: 5px;
+        margin-bottom: 25px;
+        .cartItemImg{
+          height: 90px;
+        }
+      }
+      
+    }
+  }
