@@ -12,9 +12,12 @@ function App() {
   const [isCartOpen, setCartOpen]= React.useState(false);
   const [cartItems, setCartItems]= React.useState([]);
   const [items, setItems] = React.useState([]);
+  const [searchValue, setSearchValue] = React.useState("");
   React.useEffect(()=>{
     axios.get("https://619ce80668ebaa001753cd8d.mockapi.io/items")
-    .then((response)=>{setItems(response.data)})
+    .then(response=>setItems(response.data))
+    axios.get("https://619ce80668ebaa001753cd8d.mockapi.io/cart")
+    .then(response=>setCartItems(response.data))
   }, [])
   if(isCartOpen){
     window.scrollTo(0, 0);
@@ -23,21 +26,22 @@ function App() {
   else{
     document.querySelector("body").style.overflow = "auto"
   }
+  
   function addItemToCart(item){
     setCartItems(prev => [...prev, item]);
-    
+    axios.post("https://619ce80668ebaa001753cd8d.mockapi.io/cart", item)
     
   }
   function removeItemCart(item){
+    setCartItems(prev => prev.filter(i => i.id !== item.id));
+    axios.delete(`https://619ce80668ebaa001753cd8d.mockapi.io/cart/${item.id}`)
+  }
+  function onChangeInputSearch(event){
+    setSearchValue (event.target.value); 
+  }
+  function clearInputSearch(){
+    setSearchValue("");
     
-    for(let i = 0; i < cartItems.length; i++){
-      if(cartItems[i].id===item.id){
-        let arr1 = cartItems;
-        arr1.splice(i,1);
-        setCartItems(arr1);
-        
-      }
-    }
   }
   return (
     
@@ -50,12 +54,15 @@ function App() {
         <hr />
         <div className="content">
           <div className="contentHeader">
-            <h1>All products</h1>
-              <input type="text" placeholder="Search..." className="searchInput"></input>
+            <h1>{ searchValue ?  `Search by: "${searchValue}"` : 'All products'}</h1>
+              <div className="search">
+              <input onChange={onChangeInputSearch} type="text" value={searchValue} placeholder="Search..." className="searchInput"/>
+              {searchValue && <img alt="clear search" className="clearSearchInput" onClick={clearInputSearch}  src="img/x-lg.svg"/>} 
+              </div>
           </div>
           <div className="cards">
 
-            {items.map((item)=>{
+            {items.filter(item => item.name.toLowerCase().includes(searchValue.toLowerCase())).map((item)=>{
               
               return(<Card removeItemCart={removeItemCart} item = {item} addItemToCart={addItemToCart}  {...item} key={item.id}/>);
             })}

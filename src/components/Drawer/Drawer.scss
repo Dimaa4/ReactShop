@@ -25,8 +25,55 @@
         font-size: 28px;
 
       }
+      .toOrder{
+        margin-top: 25px;
+        font-size: 18px;
+        background: rgba(128, 255, 0, 0.507);
+        padding: 15px 80px 15px 80px ;
+        display: flex;
+        border: 1px solid rgba(8, 90, 8, 0.4);
+        border-radius: 15px;
+        cursor: pointer;
+        align-items: center;
+        
+        &:hover{
+          background: rgba(128, 255, 0, 0.6);
+          .imgRight{
+            transform: translateX(10px);
+          }
+          .imgLeft{
+            transform: translateX(-10px);
+          }
+        }
+        &:active{
+          background: rgba(128, 255, 0, 0.8);
+        }
+        span{
+          margin: 0 5px 0 5px;
+        }
+        img{
+          
+          height: 20px;
+          transition: transform 0.2s ease-in-out;
+          
+          
+        }
+      }
       .items{
         overflow: auto;
+        
+        .emptyCart{
+          margin-top: 30%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          h1{
+            text-align: center;
+          }
+          h3{
+            text-align: center;
+          }
+        }
         .h1AndX{
           display: flex;
           justify-content: space-between;
@@ -44,6 +91,9 @@
       }
       .drawerBottom{
         margin-bottom: 35px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         div{
           display: flex;
           justify-content: space-between;
@@ -53,34 +103,7 @@
           width: 200px;
           margin-bottom: 3px;
         }
-        .toOrder{
-          margin-top: 25px;
-          font-size: 18px;
-          background: rgba(128, 255, 0, 0.507);
-          padding: 15px 100px 15px 100px ;
-          display: flex;
-          border: 1px solid rgba(8, 90, 8, 0.4);
-          border-radius: 15px;
-          cursor: pointer;
-          align-items: center;
-          
-          &:hover{
-            background: rgba(128, 255, 0, 0.6);
-            img{
-              transform: translateX(5px);
-            }
-          }
-          &:active{
-            background: rgba(128, 255, 0, 0.8);
-          }
-          img{
-            margin-left: 10px;
-            height: 25px;
-            transition: transform 0.2s ease-in-out;
-            
-            
-          }
-        }
+        
       }
       .imgAndName{
         display: flex;

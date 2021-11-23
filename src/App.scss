@@ -18,15 +18,29 @@ body{
         display: flex;
         justify-content: space-between;
         align-items: center;
-        .searchInput{
-          box-sizing: border-box;
-          border: 2px solid #ccc;
-          border-radius: 25px;
-          background-image: url('./search.svg');
-          background-position: 10px 10px; 
-          background-repeat: no-repeat;
-          padding: 12px 20px 12px 40px;
-          width: 200px;
+        .search{
+          display: flex;
+          align-items: center;
+          .searchInput{
+            
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 25px;
+            background-image: url('./search.svg');
+            background-position: 10px 10px; 
+            background-repeat: no-repeat;
+            padding: 12px 20px 12px 40px;
+            width: 200px;
+          }
+          .clearSearchInput{
+            opacity: 0.45;
+            width: 19px;
+            &:hover{
+              cursor: pointer;
+              opacity: 0.9;
+            }
+        }
+
         }
       }
       .cards{
