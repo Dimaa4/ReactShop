@@ -2,12 +2,13 @@ body{
   background-color: antiquewhite;
   margin:0;
   .conteiner{
-    max-width: 1200px;
+    max-width: 1175px;
     background-color: white;
     margin: 30px auto;
     padding-bottom:20px ;
     border: 3px solid burlywood;
     border-radius: 25px;
+    box-shadow: 0px 15px 35px rgba(0, 14, 24, 0.3);
     hr{
       border: 1px solid burlywood;
     }

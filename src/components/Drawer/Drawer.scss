@@ -1,10 +1,12 @@
 .overlay{
-    position: absolute;
+  z-index: 1;
+    position: absolute !important;
     background-color: rgba(0, 0, 0, 0.3);
     left:0;
     right:0;
     top:0;
     bottom:0;
+    overflow: hidden ;
     
     .drawer{
       display: flex;
@@ -32,6 +34,11 @@
           img{
             height: 20px;
             margin-right: 20px;
+            opacity: 0.4;
+            cursor: pointer;
+            &:hover{
+              opacity: 0.85;
+            }
           }
         }
       }
