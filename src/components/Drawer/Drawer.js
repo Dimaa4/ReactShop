@@ -1,5 +1,19 @@
 import React from "react";
 import "./Drawer.scss";
+
+const CartItem = ({item, removeItemCart})=>{
+    return(<div  className="cartItem">
+    <div className="imgAndName">
+        <img className="cartItemImg" src={item.img} alt={item.name}/>
+        <div>
+        <p>{item.name}</p>
+        <h4>{item.price}</h4>
+        </div>
+    </div>
+    <img onClick={()=>{removeItemCart(item)}} className="remove" src="img/remove.svg"  alt="Remove"/>
+</div> )
+}
+
 const Drawer = ({ onClickClose,removeItemCart, cartItems =[]})=>{
     
     function onKeyDownEsc(e){
@@ -31,21 +45,12 @@ const Drawer = ({ onClickClose,removeItemCart, cartItems =[]})=>{
             cartItems.map((item)=>{
                 
                 return(
-                    <div key={item.id} className="cartItem">
-                        <div className="imgAndName">
-                            <img className="cartItemImg" src={item.img} alt={item.name}/>
-                            <div>
-                            <p>{item.name}</p>
-                            <h4>{item.price}</h4>
-                            </div>
-                        </div>
-                        <img onClick={()=>{removeItemCart(item)}} className="remove" src="img/remove.svg"  alt="Remove"/>
-                    </div> 
+                    <CartItem removeItemCart = {removeItemCart} item = {item} key={item.id}/>
                 )
             }
             ) : 
             (
-                    <div class = "emptyCart">
+                    <div className = "emptyCart">
                         <img  alt = "Empty Cart" src="./img/emptyCart.svg"></img>
                         <h1>Your cart is empty!</h1>
                         <h3>Add at least one product to place an order</h3>

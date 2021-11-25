@@ -4,30 +4,34 @@ import"./Card.scss"
 
 
 
-const Card = (props)=>{
-  let [isAdded, setAdded] = React.useState(false);
+const Card = ({addItemToLiked, removeItemLiked, addItemToCart, removeItemCart, item, liked = false, addedToCart=false })=>{
+  let [isAdded, setAdded] = React.useState(addedToCart);
+  let [isLiked, setLiked] = React.useState(liked);
   let onClickAdd= ()=>{
     setAdded(!isAdded);
     if(!isAdded){
-      
-      props.addItemToCart(props.item);
+      addItemToCart(item);
     }
     else{
-      props.removeItemCart(props.item);
-      
+      removeItemCart(item);
     }
-
   };
+  let onClickLike = ()=>{
+    setLiked(!isLiked);
+    addItemToLiked(item);
+  }
     return(
       <div className="card">
-      <img className="likeSvg" src="img/heart.svg" alt="like"/> <br/>
-      <img className="goodImg" src={props.img} alt={props.name}/> <br/>
+      <img className="likeSvg" onClick={onClickLike} 
+      src={isLiked ? "img/liked.svg" : "img/heart.svg"} alt="like"
+      style={isLiked ? {opacity: 1, border:0}:{opacity: 0.4}}/> <br/>
+      <img className="goodImg" src={item.img} alt={item.name}/> <br/>
       <div className="m-l-15">
-        <h3 className="goodName">{props.name}</h3>
+        <h3 className="goodName">{item.name}</h3>
         <div className="priceAndPlus">
           <div>
             <p className="price">Price:</p> 
-            <h4>{props.price}$</h4>
+            <h4>{item.price}$</h4>
           </div>
           <img src={isAdded ? "./img/added.svg" : "./img/plus.svg"} 
           style={isAdded ? {opacity: 1, border:0}:{opacity: 0.4}} 
