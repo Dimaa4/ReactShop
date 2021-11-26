@@ -8,7 +8,36 @@ const Home = ({items,
     removeItemCart,
     addItemToLiked,
     cardLikedItems, 
-    cartItems}) =>{
+    cartItems,
+    loading}) =>{
+    function createCards(){
+      if(loading){
+        <>
+          <Card loading />
+          <Card loading />
+          <Card loading />
+          <Card loading />
+          <Card loading />
+          <Card loading />
+        </>
+      }
+      else{
+        items.filter(item => item.name.toLowerCase().includes(searchValue.toLowerCase())).map((item)=>{
+          let addedToCart = false;
+          let liked =false;
+          if(cartItems.some((i)=>i.name===item.name)){
+            addedToCart = true;
+          }
+          
+          if(cardLikedItems.some((i)=>i.name===item.name)){
+            liked = true;
+          }
+          return(<Card addItemToLiked = {addItemToLiked} removeItemLiked={removeItemLiked} 
+            addItemToCart={addItemToCart} removeItemCart={removeItemCart} item = {item}  
+             {...item} liked={liked} addedToCart={addedToCart} key={item.id} />);
+        })
+      }
+    }
     return(
         <div className="content">
           <div className="contentHeader">
@@ -20,20 +49,37 @@ const Home = ({items,
           </div>
           <div className="cards">
 
-            {items.filter(item => item.name.toLowerCase().includes(searchValue.toLowerCase())).map((item)=>{
-              let addedToCart = false;
-              let liked =false;
-              if(cartItems.some((i)=>+i.name===item.name)){
-                addedToCart = true;
-              }
+            {
+              loading ?
+                <>
+                  <Card loading />
+                  <Card loading />
+                  <Card loading />
+                  <Card loading />
+                  <Card loading />
+                  <Card loading />
+                  <Card loading />
+                  <Card loading />
+                  
+                </>
               
-              if(cardLikedItems.some((i)=>+i.name===item.name)){
-                liked = true;
+              :
+                items.filter(item => item.name.toLowerCase().includes(searchValue.toLowerCase())).map((item)=>{
+                  let addedToCart = false;
+                  let liked =false;
+                  if(cartItems.some((i)=>i.name===item.name)){
+                    addedToCart = true;
+                  }
+                  
+                  if(cardLikedItems.some((i)=>i.name===item.name)){
+                    liked = true;
+                  }
+                  return(<Card addItemToLiked = {addItemToLiked} removeItemLiked={removeItemLiked} 
+                    addItemToCart={addItemToCart} removeItemCart={removeItemCart} item = {item}  
+                     {...item} liked={liked} addedToCart={addedToCart} key={item.id} />);
+                })
               }
-              return(<Card addItemToLiked = {addItemToLiked} removeItemLiked={removeItemLiked} 
-                addItemToCart={addItemToCart} removeItemCart={removeItemCart} item = {item}  
-                 {...item} liked={liked} addedToCart={addedToCart} key={item.id}/>);
-            })}
+            
             
 
           </div>
