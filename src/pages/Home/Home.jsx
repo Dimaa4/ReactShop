@@ -1,5 +1,7 @@
 import Card from "../../components/Card/Card";
-const Home = ({items,
+import React from "react";
+import { ShopContext } from "../../App";
+const Home = ({
     addItemToCart,
     onChangeInputSearch,
     searchValue,
@@ -7,37 +9,8 @@ const Home = ({items,
     removeItemLiked,
     removeItemCart,
     addItemToLiked,
-    cardLikedItems, 
-    cartItems,
     loading}) =>{
-    function createCards(){
-      if(loading){
-        <>
-          <Card loading />
-          <Card loading />
-          <Card loading />
-          <Card loading />
-          <Card loading />
-          <Card loading />
-        </>
-      }
-      else{
-        items.filter(item => item.name.toLowerCase().includes(searchValue.toLowerCase())).map((item)=>{
-          let addedToCart = false;
-          let liked =false;
-          if(cartItems.some((i)=>i.name===item.name)){
-            addedToCart = true;
-          }
-          
-          if(cardLikedItems.some((i)=>i.name===item.name)){
-            liked = true;
-          }
-          return(<Card addItemToLiked = {addItemToLiked} removeItemLiked={removeItemLiked} 
-            addItemToCart={addItemToCart} removeItemCart={removeItemCart} item = {item}  
-             {...item} liked={liked} addedToCart={addedToCart} key={item.id} />);
-        })
-      }
-    }
+    const state = React.useContext(ShopContext);
     return(
         <div className="content">
           <div className="contentHeader">
@@ -64,14 +37,14 @@ const Home = ({items,
                 </>
               
               :
-                items.filter(item => item.name.toLowerCase().includes(searchValue.toLowerCase())).map((item)=>{
+                state.items.filter(item => item.name.toLowerCase().includes(searchValue.toLowerCase())).map((item)=>{
                   let addedToCart = false;
                   let liked =false;
-                  if(cartItems.some((i)=>i.name===item.name)){
+                  if(state.cartItems.some((i)=>i.name===item.name)){
                     addedToCart = true;
                   }
                   
-                  if(cardLikedItems.some((i)=>i.name===item.name)){
+                  if(state.cardLikedItems.some((i)=>i.name===item.name)){
                     liked = true;
                   }
                   return(<Card addItemToLiked = {addItemToLiked} removeItemLiked={removeItemLiked} 

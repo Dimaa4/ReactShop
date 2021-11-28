@@ -6,7 +6,7 @@ import axios from "axios";
 import { Route} from 'react-router-dom';
 import Home from './pages/Home/Home'
 import Favorites from './pages/Favorites/Favorites';
-
+export const ShopContext = React.createContext({});
 function App() {
   const [isCartOpen, setCartOpen]= React.useState(false);
   const [cartItems, setCartItems]= React.useState([]);
@@ -27,7 +27,8 @@ function App() {
       }
       fetchRequests();
      
-  }, [])
+  }, []);
+
   if(isCartOpen){
     window.scrollTo(0, 0);
     document.querySelector("body").style.overflow = "hidden";
@@ -57,9 +58,9 @@ function App() {
   }
   const addItemToLiked = async (item) => {
     try{
-      if(cardLikedItems.find((favItem) => favItem.id === item.id)){
+      if(cardLikedItems.find((favItem) => Number(favItem.id) === Number(item.id))){
         axios.delete(`https://619ce80668ebaa001753cd8d.mockapi.io/liked/${item.id}`)
-        setCardLikedItems(prev => prev.filter(i => i.id !== item.id));
+        setCardLikedItems(prev => prev.filter(i => Number(i.id) !== Number(item.id)));
         
       } else {
         const {data} = await axios.post("https://619ce80668ebaa001753cd8d.mockapi.io/liked", item);
@@ -79,36 +80,37 @@ function App() {
   }
   return (
     
-    <div>
+    <ShopContext.Provider value = {{items,cartItems, cardLikedItems, setCartItems}} >
+      <div>
 
-      {isCartOpen ? <Drawer removeItemCart= {removeItemCart} cartItems = {cartItems} onClickClose = {()=>{setCartOpen(false)}}/> : null}
-      
-      <div className="conteiner">
-        
-        <Header onClickCart = {()=>{setCartOpen(true)}} />
-        <hr />
-        
-        <Route path ="/" exact> 
-          <Home  items = {items} addItemToCart={addItemToCart}
-          onChangeInputSearch ={onChangeInputSearch} searchValue={searchValue}
-          clearInputSearch ={clearInputSearch}  
-          removeItemCart={removeItemCart} addItemToLiked={addItemToLiked} 
-          cardLikedItems= {cardLikedItems} cartItems={cartItems} loading = {isLoading}
-          /> 
-        </Route>
-        <Route path ="/favorites"> <Favorites items={cardLikedItems}
-    addItemToCart={addItemToCart}
-    
-    removeItemCart={removeItemCart}
-    addItemToLiked={addItemToLiked}
-    cartItems ={cartItems}/> </Route>
-        
-        
+        {isCartOpen ? <Drawer removeItemCart= {removeItemCart} onClickClose = {()=>{setCartOpen(false)}}/> : null}
+
+        <div className="conteiner">
           
-        
-        
+          <Header onClickCart = {()=>{setCartOpen(true)}} />
+          <hr />
+          
+          <Route path ="/" exact> 
+            <Home  items = {items} addItemToCart={addItemToCart}
+            onChangeInputSearch ={onChangeInputSearch} searchValue={searchValue}
+            clearInputSearch ={clearInputSearch}  
+            removeItemCart={removeItemCart} addItemToLiked={addItemToLiked} 
+            cardLikedItems= {cardLikedItems} cartItems={cartItems} loading = {isLoading}
+            /> 
+          </Route>
+          <Route path ="/favorites"> <Favorites 
+        addItemToCart={addItemToCart}
+        removeItemCart={removeItemCart}
+        addItemToLiked={addItemToLiked}
+        cartItems ={cartItems}/> </Route>
+          
+          
+            
+          
+          
+        </div>
       </div>
-    </div>
+    </ShopContext.Provider>
   );
 }
 

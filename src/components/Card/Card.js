@@ -2,19 +2,23 @@
 import React from "react";
 import"./Card.scss"
 import ContentLoader from "react-content-loader";
+import { ShopContext } from "../../App";
 
-
-const Card = ({addItemToLiked, removeItemLiked, addItemToCart, removeItemCart, item, liked = false, addedToCart=false, loading =false })=>{
-  let [isAdded, setAdded] = React.useState(addedToCart);
+const Card = ({addItemToLiked,  addItemToCart, item, liked = false, addedToCart=false, loading =false })=>{
   let [isLiked, setLiked] = React.useState(liked);
   let onClickAdd= ()=>{
-    setAdded(!isAdded);
+    
     addItemToCart(item);
+  };
+  const {cartItems} = React.useContext(ShopContext);
+  const isItemAdded = (name)=>{
+    return cartItems.some(i=>name === i.name);
   };
   let onClickLike = ()=>{
     setLiked(!isLiked);
     addItemToLiked(item);
-  }
+  };
+  
     return(
       
       <div className="card">
@@ -47,8 +51,8 @@ const Card = ({addItemToLiked, removeItemLiked, addItemToCart, removeItemCart, i
               <p className="price">Price:</p> 
               <h4>{item.price}$</h4>
             </div>
-            <img src={isAdded ? "./img/added.svg" : "./img/plus.svg"} 
-            style={isAdded ? {opacity: 1, border:0}:{opacity: 0.4}} 
+            <img src={isItemAdded(item.name) ? "./img/added.svg" : "./img/plus.svg"} 
+            style={isItemAdded(item.name) ? {opacity: 1, border:0}:{opacity: 0.4}} 
             className="plusSvg" alt="addToCart" onClick={onClickAdd}/>
           </div>
         </div>

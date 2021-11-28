@@ -1,20 +1,24 @@
+import React from "react";
 import Card from "../../components/Card/Card";
-const Favorites = ({items,
+import {ShopContext} from "../../App";
+
+const Favorites = ({  
     addItemToCart,
     removeItemLiked,
     removeItemCart,
-    addItemToLiked,
-    cartItems}) =>{
+    addItemToLiked}) =>{
+    const state = React.useContext(ShopContext);
     return(
+
         <div className="content">
           <div className="contentHeader">
             <h1>Your favorites</h1>
           </div>
           <div className="cards">
 
-            {items.map((item)=>{
+            {state.cardLikedItems.map((item)=>{
                 let addedToCart = false;
-                if(cartItems.some((i)=>+i.name===item.name)){
+                if(state.cartItems.some((i)=>+i.name===item.name)){
                     addedToCart = true;
                   }
               return(<Card addItemToLiked = {addItemToLiked} removeItemLiked={removeItemLiked} 
