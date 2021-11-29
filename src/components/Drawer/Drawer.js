@@ -35,11 +35,7 @@ const Drawer = ({ onClickClose,removeItemCart})=>{
             onClickClose();
         }
     }
-    function sumOfCart(){
-        alert (cartItems.reduce((item, sum)=>item.price+sum));
-        return cartItems.reduce((item, sum)=>item.price+sum);
-        
-    }
+    const sumOfCart = cartItems.reduce((sum, obj)=>sum+obj.price,0)
     const onOrder = async ()=>{
         try{
             setLoadingOrder(true);
@@ -91,7 +87,7 @@ const Drawer = ({ onClickClose,removeItemCart})=>{
     {cartItems.length !== 0 && (
         <div className="drawerBottom">
         <div><span>Total </span><div className="dash"/> <span> {sumOfCart}$</span></div>
-        <div><span>Bills 5% </span><div className="dash"/> <span >10$</span></div>
+        <div><span>Bills 5% </span><div className="dash"/> <span >{sumOfCart*0.05}$</span></div>
         <button disabled={isLoadingOrder} onClick={onOrder} className="toOrder"><span>To order </span> <img className="imgRight" src="img/arrow-right.svg" alt="button"/></button>
     </div>
 

@@ -38,18 +38,10 @@ const Home = ({
               
               :
                 state.items.filter(item => item.name.toLowerCase().includes(searchValue.toLowerCase())).map((item)=>{
-                  let addedToCart = false;
-                  let liked =false;
-                  if(state.cartItems.some((i)=>i.name===item.name)){
-                    addedToCart = true;
-                  }
-                  
-                  if(state.cardLikedItems.some((i)=>i.name===item.name)){
-                    liked = true;
-                  }
+                  item.prId = item.id;
                   return(<Card addItemToLiked = {addItemToLiked} removeItemLiked={removeItemLiked} 
                     addItemToCart={addItemToCart} removeItemCart={removeItemCart} item = {item}  
-                     {...item} liked={liked} addedToCart={addedToCart} key={item.id} />);
+                     {...item}  key={item.id} />);
                 })
               }
             

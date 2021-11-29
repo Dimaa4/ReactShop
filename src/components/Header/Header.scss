@@ -47,7 +47,13 @@ header{
         
       }
       .svgAccount{
+        cursor: pointer;
         opacity: 0.55;
+        margin-left: 10px;
+        margin-right: 10px;
+        &:hover{
+          opacity: 0.8;
+        }
       }
       .svgHeart{
         cursor: pointer;

@@ -5,6 +5,7 @@ import Header from './components/Header/Header';
 import axios from "axios";
 import { Route} from 'react-router-dom';
 import Home from './pages/Home/Home'
+import { Orders } from './pages/Orders/Orders';
 import Favorites from './pages/Favorites/Favorites';
 export const ShopContext = React.createContext({});
 function App() {
@@ -37,39 +38,69 @@ function App() {
     document.querySelector("body").style.overflow = "auto"
   }
   
-  function addItemToCart(item){
+  async function addItemToCart(item){
     try{
-      if(cartItems.find((cartItem) => Number(cartItem.id) === Number(item.id))){
+      const findItem = cartItems.find(i=>Number(item.id)=== i.productId)
+      if(findItem){
         
-        setCartItems(prev => prev.filter(i => Number(i.id) !== Number(item.id)));
-        axios.delete(`https://619ce80668ebaa001753cd8d.mockapi.io/cart/${item.id}`)
+        setCartItems(prev => prev.filter(i => Number(i.productId) !== Number(item.id)));
+        axios.delete(`https://619ce80668ebaa001753cd8d.mockapi.io/cart/${findItem.id}`)
       }
       else{
-        setCartItems(prev => [...prev, item]);
-        axios.post("https://619ce80668ebaa001753cd8d.mockapi.io/cart", item)
+        item.productId = item.id;
+        setCartItems((prev) => [...prev, item]);
+        
+        const {data} = await axios.post("https://619ce80668ebaa001753cd8d.mockapi.io/cart", 
+        {name: item.name, price: item.price, img: item.img, productId: item.id})
+        console.log(cartItems);
+        setCartItems(prev => prev.map((i)=>{
+          if (i.productId === data.productId){
+            return{
+              ...i,
+              id:data.id
+            }
+          }
+          return i;
+        }));
+        console.log(cartItems);
       }
     } catch(error){
       alert("ERROR")
     }
   }
-  function removeItemCart(item){
-    setCartItems(prev => prev.filter(i => i.id !== item.id));
-    axios.delete(`https://619ce80668ebaa001753cd8d.mockapi.io/cart/${item.id}`)
-  }
   const addItemToLiked = async (item) => {
+    const findItem = cardLikedItems.find(i=>Number(item.prId)=== Number(i.productId))
     try{
-      if(cardLikedItems.find((favItem) => Number(favItem.id) === Number(item.id))){
-        axios.delete(`https://619ce80668ebaa001753cd8d.mockapi.io/liked/${item.id}`)
-        setCardLikedItems(prev => prev.filter(i => Number(i.id) !== Number(item.id)));
+      if(findItem){
+        
+        setCardLikedItems(prev => prev.filter(i => Number(i.productId) !== Number(item.prId)));
+        axios.delete(`https://619ce80668ebaa001753cd8d.mockapi.io/liked/${findItem.id}`)
+        console.log(cardLikedItems)
         
       } else {
-        const {data} = await axios.post("https://619ce80668ebaa001753cd8d.mockapi.io/liked", item);
-        setCardLikedItems(prev => [...prev, data]);
+        item.productId = item.prId;
+        setCardLikedItems((prev) => [...prev, item]);
+        const {data} = await axios.post("https://619ce80668ebaa001753cd8d.mockapi.io/liked", 
+        {name: item.name, price: item.price, img: item.img, productId: item.id});
+        setCardLikedItems(prev => prev.map((i)=>{
+          if (i.productId === data.productId){
+            return{
+              ...i,
+              id:data.id
+            }
+          }
+          return i;
+        }))
       }
     } catch(error){
         alert("ERROR")
     }
   }
+  function removeItemCart(item){
+    setCartItems(prev => prev.filter(i => Number(i.id) !== Number(item.id)));
+    axios.delete(`https://619ce80668ebaa001753cd8d.mockapi.io/cart/${item.id}`)
+  }
+  
   
   function onChangeInputSearch(event){
     setSearchValue (event.target.value); 
@@ -103,7 +134,12 @@ function App() {
         removeItemCart={removeItemCart}
         addItemToLiked={addItemToLiked}
         cartItems ={cartItems}/> </Route>
-          
+          <Route path ="/orders"> 
+            <Orders
+            addItemToCart={addItemToCart}
+            removeItemCart={removeItemCart}
+            addItemToLiked={addItemToLiked}/> 
+          </Route>
           
             
           

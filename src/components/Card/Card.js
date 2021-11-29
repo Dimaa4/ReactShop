@@ -4,18 +4,22 @@ import"./Card.scss"
 import ContentLoader from "react-content-loader";
 import { ShopContext } from "../../App";
 
-const Card = ({addItemToLiked,  addItemToCart, item, liked = false, addedToCart=false, loading =false })=>{
-  let [isLiked, setLiked] = React.useState(liked);
+const Card = ({addItemToLiked,  addItemToCart, item,  loading =false })=>{
+  
   let onClickAdd= ()=>{
     
     addItemToCart(item);
   };
-  const {cartItems} = React.useContext(ShopContext);
-  const isItemAdded = (name)=>{
-    return cartItems.some(i=>name === i.name);
+  const {cartItems,cardLikedItems} = React.useContext(ShopContext);
+  const isItemAdded = (productId)=>{
+    return cartItems.some(i=>Number(productId) === Number(i.productId));
+  };
+  const isItemLiked = (productId)=>{
+    
+    return cardLikedItems.some(i=>Number(productId) === Number(i.productId));
   };
   let onClickLike = ()=>{
-    setLiked(!isLiked);
+    
     addItemToLiked(item);
   };
   
@@ -40,9 +44,10 @@ const Card = ({addItemToLiked,  addItemToCart, item, liked = false, addedToCart=
         </ContentLoader>  
       :
         <>
+        {addItemToLiked && 
         <img className="likeSvg" onClick={onClickLike} 
-        src={isLiked ? "img/liked.svg" : "img/heart.svg"} alt="like"
-        style={isLiked ? {opacity: 1, border:0}:{opacity: 0.4}}/> <br/>
+        src={isItemLiked(item.prId) ? "img/liked.svg" : "img/heart.svg"} alt="like"
+        style={isItemLiked(item.prId) ? {opacity: 1, border:0}:{opacity: 0.4}}/>} <br/>
         <img className="goodImg" src={item.img} alt={item.name}/> <br/>
         <div className="m-l-15">
           <h3 className="goodName">{item.name}</h3>
@@ -51,9 +56,10 @@ const Card = ({addItemToLiked,  addItemToCart, item, liked = false, addedToCart=
               <p className="price">Price:</p> 
               <h4>{item.price}$</h4>
             </div>
-            <img src={isItemAdded(item.name) ? "./img/added.svg" : "./img/plus.svg"} 
-            style={isItemAdded(item.name) ? {opacity: 1, border:0}:{opacity: 0.4}} 
-            className="plusSvg" alt="addToCart" onClick={onClickAdd}/>
+            {addItemToCart && 
+            <img src={isItemAdded(item.id) ? "./img/added.svg" : "./img/plus.svg"} 
+            style={isItemAdded(item.id) ? {opacity: 1, border:0}:{opacity: 0.4}} 
+            className="plusSvg" alt="addToCart" onClick={onClickAdd}/>}
           </div>
         </div>
         </>

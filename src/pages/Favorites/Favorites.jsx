@@ -17,13 +17,10 @@ const Favorites = ({
           <div className="cards">
 
             {state.cardLikedItems.map((item)=>{
-                let addedToCart = false;
-                if(state.cartItems.some((i)=>+i.name===item.name)){
-                    addedToCart = true;
-                  }
+              item.prId = item.productId;
               return(<Card addItemToLiked = {addItemToLiked} removeItemLiked={removeItemLiked} 
                 addItemToCart={addItemToCart} removeItemCart={removeItemCart} item = {item}   
-                {...item} key={item.id} liked={true} addedToCart={addedToCart}/>);
+                {...item} key={item.id} />);
             })}
             
 
