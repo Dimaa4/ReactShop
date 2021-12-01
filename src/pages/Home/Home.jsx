@@ -17,7 +17,7 @@ const Home = ({
             <h1>{ searchValue ?  `Search by: "${searchValue}"` : 'All products'}</h1>
               <div className="search">
               <input onChange={onChangeInputSearch} type="text" value={searchValue} placeholder="Search..." className="searchInput"/>
-              {searchValue && <img alt="clear search" className="clearSearchInput" onClick={clearInputSearch}  src="img/x-lg.svg"/>} 
+              {searchValue && <img alt="clear search" className="clearSearchInput" onClick={clearInputSearch}  src="https://dimaa4.github.io/ReactShop/img/x-lg.svg"/>} 
               </div>
           </div>
           <div className="cards">

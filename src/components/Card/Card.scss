@@ -7,7 +7,7 @@
     
     border: 1px solid rgba(231, 231, 231, 0.6);
     &:hover{
-      box-shadow: 0px 14px 30px rgba(0, 20, 35,0.15);
+      box-shadow: 0px 14px 30px rgba(0, 20, 35,0.07);
       transform: translateY(-5px);
     }
     .likeSvg{
@@ -22,7 +22,7 @@
     
     .goodImg{
       height: 175px;
-      width: 175px;;
+      width: 175px;
     }
     .activeSvg{
       fill: magenta;
@@ -49,5 +49,8 @@
     }
     .m-l-15{
       margin-left: 15px;
+      .goodName{
+        line-height: 25px;
+      }
     }
   }

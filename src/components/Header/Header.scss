@@ -2,6 +2,7 @@ header{
     display: flex;
     justify-content: space-between;
     margin: 15px 20px 5px 15px;
+    align-items: center;
     a{
       text-decoration:none !important;
       color: black;
@@ -13,8 +14,7 @@ header{
       display: flex;
       align-items: center;
       justify-content: space-between;
-      min-width: 195px;
-      width: 250px;
+      
       line-height: 13px;
       
       .logo{
@@ -22,6 +22,7 @@ header{
         width: 60px;
         min-height: 40px;
         min-width: 40px;
+        margin-right: 20px;
       }
     }
     .headerRight{
@@ -58,8 +59,8 @@ header{
       .svgHeart{
         cursor: pointer;
         opacity: 0.55;
-        margin-left: 10px;
-        margin-right: 10px;
+        margin-left: 15px;
+        margin-right: 15px;
         &:hover{
           opacity: 0.8;
         }

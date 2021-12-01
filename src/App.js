@@ -30,13 +30,7 @@ function App() {
      
   }, []);
 
-  if(isCartOpen){
-    window.scrollTo(0, 0);
-    document.querySelector("body").style.overflow = "hidden";
-  }
-  else{
-    document.querySelector("body").style.overflow = "auto"
-  }
+  
   
   async function addItemToCart(item){
     try{
@@ -109,19 +103,21 @@ function App() {
     setSearchValue("");
     
   }
+  const clientWidth = document.documentElement.clientWidth;
+  
   return (
     
     <ShopContext.Provider value = {{items,cartItems, cardLikedItems, setCartItems}} >
       <div>
 
-        {isCartOpen ? <Drawer removeItemCart= {removeItemCart} onClickClose = {()=>{setCartOpen(false)}}/> : null}
+        <Drawer isCartOpen={isCartOpen} removeItemCart= {removeItemCart} onClickClose = {()=>{setCartOpen(false)}}/>
 
         <div className="conteiner">
           
-          <Header onClickCart = {()=>{setCartOpen(true)}} />
+          <Header onClickCart = {()=>{setCartOpen(true)}} clientWidth={clientWidth} />
           <hr />
           
-          <Route path ="/" exact> 
+          <Route path ="/ReactShop/" exact> 
             <Home  items = {items} addItemToCart={addItemToCart}
             onChangeInputSearch ={onChangeInputSearch} searchValue={searchValue}
             clearInputSearch ={clearInputSearch}  
@@ -129,12 +125,12 @@ function App() {
             cardLikedItems= {cardLikedItems} cartItems={cartItems} loading = {isLoading}
             /> 
           </Route>
-          <Route path ="/favorites"> <Favorites 
+          <Route path ="/favorites/"> <Favorites 
         addItemToCart={addItemToCart}
         removeItemCart={removeItemCart}
         addItemToLiked={addItemToLiked}
         cartItems ={cartItems}/> </Route>
-          <Route path ="/orders"> 
+          <Route path ="/orders/"> 
             <Orders
             addItemToCart={addItemToCart}
             removeItemCart={removeItemCart}

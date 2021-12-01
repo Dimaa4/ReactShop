@@ -46,7 +46,7 @@ const Card = ({addItemToLiked,  addItemToCart, item,  loading =false })=>{
         <>
         {addItemToLiked && 
         <img className="likeSvg" onClick={onClickLike} 
-        src={isItemLiked(item.prId) ? "img/liked.svg" : "img/heart.svg"} alt="like"
+        src={isItemLiked(item.prId) ? "https://dimaa4.github.io/ReactShop/img/liked.svg" : "https://dimaa4.github.io/ReactShop/img/heart.svg"} alt="like"
         style={isItemLiked(item.prId) ? {opacity: 1, border:0}:{opacity: 0.4}}/>} <br/>
         <img className="goodImg" src={item.img} alt={item.name}/> <br/>
         <div className="m-l-15">
@@ -57,7 +57,7 @@ const Card = ({addItemToLiked,  addItemToCart, item,  loading =false })=>{
               <h4>{item.price}$</h4>
             </div>
             {addItemToCart && 
-            <img src={isItemAdded(item.id) ? "./img/added.svg" : "./img/plus.svg"} 
+            <img src={isItemAdded(item.id) ? "https://dimaa4.github.io/ReactShop/img/added.svg" : "https://dimaa4.github.io/ReactShop/img/plus.svg"} 
             style={isItemAdded(item.id) ? {opacity: 1, border:0}:{opacity: 0.4}} 
             className="plusSvg" alt="addToCart" onClick={onClickAdd}/>}
           </div>

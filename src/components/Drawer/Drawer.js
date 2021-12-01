@@ -17,14 +17,19 @@ const CartItem = ({item, removeItemCart})=>{
 </div> )
 }
 
-const Drawer = ({ onClickClose,removeItemCart})=>{
-    
+
+const Drawer = ({ onClickClose,removeItemCart, isCartOpen})=>{
     const [isOrderComplete, setOrderComplete] = React.useState(false);
     const {cartItems, setCartItems} = React.useContext(ShopContext);
     const [orderId, setOrderId]= React.useState(null);
     const [isLoadingOrder, setLoadingOrder] = React.useState(false);
+    
+ 
+    
+        
+    
     function onKeyDownEsc(e){
-        console.log(e);
+        
         if(e.code === "Escape"){
             onClickClose();
         }
@@ -33,6 +38,7 @@ const Drawer = ({ onClickClose,removeItemCart})=>{
         let overlay = document.querySelector(".overlay")
         if(e.target === overlay){
             onClickClose();
+            console.log(isCartOpen);
         }
     }
     const sumOfCart = cartItems.reduce((sum, obj)=>sum+obj.price,0)
@@ -53,11 +59,22 @@ const Drawer = ({ onClickClose,removeItemCart})=>{
         }
         setLoadingOrder(false);
     }
-    return(<div className="overlay" tabIndex="0" onClick={clickOverlay} onKeyDown={onKeyDownEsc} >
+    
+    if(isCartOpen){
+        window.scrollTo(0, 0);
+        window.onscroll = () => { window.scrollTo(0, 0); };
+      }
+    else if(!isCartOpen){
+        window.onscroll ="";
+    }
+      
+    
+    return(
+    <div className={`overlay ${isCartOpen ? "overlayOpened" : null}`} tabIndex="0" onClick={clickOverlay} onKeyDown={onKeyDownEsc} >
     <div className="drawer">
             <div className="items">
             <div className="h1AndX"><h1>Cart:</h1>
-                <img alt="closeCart" onClick={onClickClose}  src="img/x-lg.svg"/>
+                <img alt="closeCart" onClick={onClickClose}  src="https://dimaa4.github.io/ReactShop/img/x-lg.svg"/>
             </div>
             <hr/>
 
@@ -72,11 +89,11 @@ const Drawer = ({ onClickClose,removeItemCart})=>{
             (
                 isOrderComplete ?
                     <Info title="Your order is complete!" description= {`Your order №${orderId}. Courier will arrive soon`}
-                        img="./img/orderCompleted.svg" alt="Order completed" onClick={onClickClose}/>    
+                        img="https://dimaa4.github.io/ReactShop/img/orderCompleted.svg" alt="Order completed" onClick={onClickClose}/>    
                     
                 :
                     <Info title="Your cart is empty!" description="Add at least one product to place an order"
-                        img="./img/emptyCart.svg" alt="Empty Cart" onClick={onClickClose}/>
+                        img="https://dimaa4.github.io/ReactShop/img/emptyCart.svg" alt="Empty Cart" onClick={onClickClose}/>
                 
             )
 
@@ -88,11 +105,12 @@ const Drawer = ({ onClickClose,removeItemCart})=>{
         <div className="drawerBottom">
         <div><span>Total </span><div className="dash"/> <span> {sumOfCart}$</span></div>
         <div><span>Bills 5% </span><div className="dash"/> <span >{sumOfCart*0.05}$</span></div>
-        <button disabled={isLoadingOrder} onClick={onOrder} className="toOrder"><span>To order </span> <img className="imgRight" src="img/arrow-right.svg" alt="button"/></button>
+        <button disabled={isLoadingOrder} onClick={onOrder} className="toOrder"><span>To order </span> <img className="imgRight" src="https://dimaa4.github.io/ReactShop/img/arrow-right.svg" alt="button"/></button>
     </div>
 
     ) }
     </div>
+    
 </div>);
 };
 export default Drawer;
