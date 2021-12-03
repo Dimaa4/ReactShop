@@ -1,10 +1,18 @@
 https://dimaa4.github.io/ReactShop/
 
-Stack:
+### Stack:
 
-ReactJS + hooks
-React Router
-Axios
-SCSS
-React Context
-React Skeleton
+
+ReactJS + hooks;
+
+React Router;
+
+Axios;
+
+SCSS;
+
+React Context;
+
+React Skeleton;
+
+
